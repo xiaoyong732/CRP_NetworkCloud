@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "67998021-f5c7-423c-973d-1f4966d5bbda",
+		"name": "卡诺普智慧云Echo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "平台端",
+			"item": [
+				{
+					"name": "获取图形验证码",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//设置检查点\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//把responsebody转换为json字符串\r",
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"//测试环境变量token，供后面的接口引用\r",
+									"pm.environment.set(\"cid\",data.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url1}}/public/captcha",
+							"host": [
+								"{{url1}}"
+							],
+							"path": [
+								"public",
+								"captcha"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//设置检查点\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//把responsebody转换为json字符串\r",
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"//测试环境变量token，供后面的接口引用\r",
+									"pm.environment.set(\"token\",data.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"account\": \"admin\",\r\n  \"cid\": \"{{cid}}\",\r\n  \"code\": \"0000\",\r\n  \"password\": \"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url1}}/auth/token",
+							"host": [
+								"{{url1}}"
+							],
+							"path": [
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_company_detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//设置检查点\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url1}}/company/list?page=1&size=10&type=2",
+							"host": [
+								"{{url1}}"
+							],
+							"path": [
+								"company",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "type",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_news_detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url1}}/homes/get-news-detail?id=40",
+							"host": [
+								"{{url1}}"
+							],
+							"path": [
+								"homes",
+								"get-news-detail"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "40"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "经销商端",
+			"item": []
+		},
+		{
+			"name": "客户端",
+			"item": []
+		}
+	]
+}
